@@ -1,0 +1,49 @@
+#include<iostream>
+#include <utility> // - для pair
+#include <tuple> // - для кортежей
+using namespace std;
+
+enum class Color { // - задаем перечисление (новый тип данный, что-то вроде int, float, ...)
+	Red,
+	Indigo,
+	White,
+	Black,
+};
+
+
+struct Point { // - задаем структуру.
+	double x = 0.0;
+	double y = 0.0;
+	double z = 0.0;
+	Color color; // задание цветной точки из перечисления Color.
+};
+
+
+int main() {
+	Color first_color = Color::White;
+	Color second_color = Color::Indigo;
+	Color third_color = Color::Red;
+	// - флаг расии!
+
+
+	int value = static_cast<int>(first_color); // 2, - переводит значение first_color в номер white в Color.
+	Color extra_color = static_cast<Color>(3); // Color::Black, - переводит 3 номер Color в его значение.
+
+	Point first_point; // - точка с нулевыми координатами без цвета.
+	first_point.color = Color::Red; // - задаем этой точке красный цвет.
+
+	Point second_point = { 1.4, -2.2, -3.98, Color::Indigo }; /* задает синюю точку с координатами:
+	x = 1.4, y = -2.2, z = -3.98, color = Color::Indigo */
+
+	second_point.x = 3.14; // - меняем значение x второй точки на 3.14.
+	second_point.y += 2.2; // - прибавляем 2.2 к значению y второй точки.
+
+	pair<int, double> p = { 12,1.2 };
+	cout << p.first << " " << p.second << endl; // - выводит первый и второй элементы заданой пары.
+
+	tuple<int, double, Point> t = { 12,1.2, {1.4, -2.2, -3.98, Color::Indigo} };
+	cout << get<0>(t) << " " << get<1>(t) << endl; // вывод элементов кортежа (третий элемент не может быть выведен).
+	get<2>(t) = { 1,1,1, Color::Red }; // изменение элемента кортежа.
+
+
+}
