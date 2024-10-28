@@ -1,0 +1,92 @@
+/*
+#include<vector>
+#include<iostream>
+using namespace std;
+int main() {
+	size_t m, n;
+	cin >> m >> n;
+	vector<vector<int>> matrix(m, vector<int>(n));
+	for (size_t i = 0; i != m; i++) {
+		for (size_t j = 0; j != n; j++) {
+			cin >> matrix[i][j];
+		}
+	}
+	for (size_t i = 0; i != m; i++) {
+		for (size_t j = 0; j != n; j++) {
+			cout << matrix[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+*/ // - создаие двумерного вектора
+
+
+
+
+/*
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+int main() {
+	vector<int> data = { 1,2,3,4,5 };
+	data.push_back(6);
+	data.push_back(7);
+	data.pop_back();
+	data[1] = 22;
+	cout << data.at(4) << endl;
+	cout << data.front() << " " << data.back() << endl;
+	for (size_t elem = 0; elem != size(data); elem++) {
+		cout << data[elem] << " ";
+	}
+	cout << endl;
+	vector<int> datanew = { 80,57,7,25,67,68,9,12,9,44,8,764,34,35,4,54,6 };
+	sort(datanew.begin(), datanew.end());
+	for (size_t elem = 0; elem != size(datanew); elem++) {
+		cout << datanew[elem] << " ";
+	}
+	cout << endl;
+	sort(datanew.rbegin(), datanew.rend());
+	for (size_t elem = 0; elem != size(datanew); elem++) {
+		cout << datanew[elem] << " ";
+	}
+	cout << endl;
+	while (!data.empty()) {
+		for (size_t elem = 0; elem != size(data); elem++) {
+			cout << data[elem] << " ";
+		}
+		data.pop_back();
+		cout << endl;
+	}
+}
+*/ // - работа с векторами, основные функции и фишки.
+
+
+/*
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+int main() {
+	vector<string> words;
+
+	size_t words_count;
+	cin >> words_count;
+
+	// Размер вектора остаётся нулевым, меняется только резерв:
+	words.reserve(words_count);
+
+	for (size_t i = 0; i != words_count; ++i) {
+		string word;
+		cin >> word;
+		// Все добавления будут дешёвыми, без реаллокаций:
+		words.push_back(word);
+	}
+	cout << endl;
+	for (size_t i = 0; i != words.size(); i++) {
+		cout << words[i] << " ";
+	}
+	cout << endl;
+}
+*/ // ввод слов в вектор и их вывод с учетом реаллокаций.
