@@ -1,0 +1,33 @@
+#include<iostream>
+#include<string>
+using namespace std;
+int main() {
+	string s = "12345678";
+	s += '9'; // - добавление одного символа с одинарными кавычками.
+	s += "101112";
+	string sub1 = s.substr(5, 1); // - записывание в переменную 1 символа подстроки, начиная с 5 элемента.
+	string sub2 = s.substr(9); // - с 9 до конца строки.
+
+	cout << s << endl << sub1 << endl << sub2 << endl;
+
+	string s1 = "some text lol";
+	size_t pos1 = s1.find(" "); // - ищет первый пробел в строке.
+	size_t pos2 = s1.find(" ", pos1 + 1); // - ищет первый пробел в строке, не учитывая предыдущий pos1
+
+	cout << pos1 << endl << pos2 << endl;
+
+	string s2 = "hello world";
+	s2.insert(11, "!");
+
+	cout << s2 << endl;
+
+	s2.replace(6, 11, "kakashka!");
+
+	cout << s2 << endl;
+
+	s2.erase(6, 9);
+	s2.insert(5, "!");
+
+	cout << s2 << endl;
+
+}
