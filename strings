@@ -30,4 +30,5 @@ int main() {
 
 	cout << s2 << endl;
 
+	s2.clear() // - очищает строку
 }
