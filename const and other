@@ -1,0 +1,48 @@
+
+#include<iostream>
+#include<string>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+int main() {
+	// - ссылки
+	string s1 = "hi there!";
+	string& s2 = s1; // - ссылка на с1 (не может быть изменена, принимает все значение s1, даже после изменений)
+	string& s3 = s2; // - ссылка на с2 (то же самое, что и сверху)
+	s1.replace(3,9,"johny!");
+
+	cout << s1 << endl << s2 << endl << s3 << endl; // - выводится 3 одинаковых строки
+
+	s1.erase(3, 9);
+	s1 += "user!";
+
+	cout << s1 << endl << s2 << endl << s3 << endl; // - аналогично
+
+	// - указатели
+	int x = 42, y = 13;
+	int* ptr; // - задаем случайный	адрес
+	ptr = nullptr; // - нулевой указатель
+	ptr = &x; // & - адрес переменной икс в памяти 
+
+	cout << *ptr << endl; // * - значение переменной икс по адресу памяти (42)
+
+	ptr = &y;
+
+	cout << *ptr + 2 << endl; // - 13+2=15
+
+	// - константность
+	int a;
+	cin >> a;
+	const int x1 = a * a; // - неизменяемый параметр - константа
+	const vector<int> v = { x1, 2 * x1, 3 * x1, 4 * x1 }; // неизменяемый вектор из констант
+	for (size_t x = 0; x != size(v); ++x) {
+		cout << v[x] << endl;
+	}
+	int b = 42;
+	const int& cref = b; // - константная ссылка (ее нельзя изменять, только читать)
+	const int* cptr = &b; // - константный указатель (аналогично)
+
+}
+
+
