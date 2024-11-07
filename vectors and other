@@ -90,3 +90,24 @@ int main() {
 	cout << endl;
 }
 */ // ввод слов в вектор и их вывод с учетом реаллокаций.
+
+int nums[5]; // - объявление массива и его длины.
+cout << "you need to enter your own data" << endl;
+for (int i = 0; i < size(nums); ++i) 
+{
+		cout << "enter el" << i + 1 << ": ";
+		cin >> nums[i];
+}
+cout << endl << "your data is [";
+for (int i = 0; i < size(nums); ++i) 
+{
+	if (i != size(nums) - 1) 
+	{
+		cout << nums[i] << ", ";
+	}
+	else if (i == size(nums) - 1) 
+	{
+		cout << nums[i];
+	}
+}
+cout << "]" << endl;
