@@ -62,12 +62,13 @@ int main() {
 */ // - работа с векторами, основные функции и фишки.
 
 
+
+
 /*
 #include <iostream>
 #include <string>
 #include <vector>
 using namespace std;
-
 int main() {
 	vector<string> words;
 
@@ -91,23 +92,67 @@ int main() {
 }
 */ // ввод слов в вектор и их вывод с учетом реаллокаций.
 
-int nums[5]; // - объявление массива и его длины.
-cout << "you need to enter your own data" << endl;
-for (int i = 0; i < size(nums); ++i) 
-{
-		cout << "enter el" << i + 1 << ": ";
-		cin >> nums[i];
-}
-cout << endl << "your data is [";
-for (int i = 0; i < size(nums); ++i) 
-{
-	if (i != size(nums) - 1) 
+
+
+
+#include<iostream>
+#include<string>
+using namespace std;
+int main() {
+	int sum = 0;
+	int nums[5]; // - объявление массива и его длины.
+	cout << "you need to enter your own data" << endl;
+	for (int i = 0; i < size(nums); ++i) 
 	{
-		cout << nums[i] << ", ";
+			cout << "enter el" << i + 1 << ": ";
+			cin >> nums[i];
+			sum += nums[i]; // сумма
 	}
-	else if (i == size(nums) - 1) 
+	int min_el = nums[0], pos = 0;
+	for (int i = 0; i < size(nums); ++i) { // минимальный элемент
+		if (nums[i] < min_el) {
+			min_el = nums[i];
+			pos = i;
+		}
+	}
+	cout << endl << "your data is [";
+	for (int i = 0; i < size(nums); ++i) 
 	{
-		cout << nums[i];
+		if (i != size(nums) - 1) 
+		{
+			cout << nums[i] << ", ";
+		}
+		else if (i == size(nums) - 1) 
+		{
+			cout << nums[i];
+		}
+	}
+	cout << "]" << endl << "summary is: " << 
+		sum << endl << "smallest element is: " << 
+		min_el << " -- " << "it's position is: " << pos << endl << endl;
+
+	cout << "the matrix is down" << endl;
+	int matrix[3][3] = {
+		{1,2,3},
+		{4,5,6},
+		{7,8,9}
+	};
+	for (int i = 0; i < size(matrix); ++i) {
+		for (int j = 0; j < size(matrix); ++j) {
+			cout << matrix[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	cout << "only %2 matrix" << endl;
+	for (int i = 0; i < size(matrix); ++i) {
+		for (int j = 0; j < size(matrix); ++j) {
+			if (matrix[i][j] % 2 == 0) {
+				cout << matrix[i][j] << "\t";
+			}
+			else if (matrix[i][j] % 2 != 0) {
+				cout << " " << "\t";
+			}
+		}
+		cout << endl;
 	}
 }
-cout << "]" << endl;
