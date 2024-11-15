@@ -1,0 +1,205 @@
+// 1.1
+// Average
+#include<iostream>
+#include<string>
+using namespace std;
+
+int main() {
+	typedef unsigned short int ushort;
+	ushort firstSum, secondSum, thirdSum;
+	cout << "Enter your three sums!" << endl;
+	cin >> firstSum
+		>> secondSum 
+		>> thirdSum;
+	ushort count = 3; 
+	float average = (firstSum + secondSum + thirdSum) / count;
+	cout << "Three sums average is: " << average << endl;
+}
+
+
+// 2.0
+// Game Designer's Nerwork
+#include<iostream>
+#include<string>
+using namespace std;
+
+int main() {
+	string username, 
+		password;
+	bool success = false;
+	cout << "\tGame Designer's Network";
+	do
+	{
+		cout << "\n\nUsername: ";
+		cin >> username;
+		cout << "Password: ";
+		cin >> password;
+		if (password == "guest" || username == "guest") 
+		{
+			cout << "\nWelcome, guest." << endl;
+			success = true;
+		}
+		else if (password == "romanenkov" && username == "egor")
+		{
+			cout << "\nWelcome, " << username << ", how are u ?" << endl;
+			success = true;
+		}
+		else if (password == "kaneki" && username == "ken") 
+		{
+			cout << "\nWelcome, " << username << " " << password << ", how are u ?" << endl;
+			success = true;
+		}
+		else if (password == "123" && username == "123")
+		{
+			cout << "\nHey, it's not so easy! Try again.";
+		}
+		else 
+		{
+			cout << "\nInvalid login, try again.";
+		}
+	} while (!success);
+}
+
+
+// 2.1
+// Roll any number from 1 to 6
+#include<iostream>
+#include<cstdlib>
+#include<ctime>	
+using namespace std;
+int main() {
+	int attempts = 0, sum = 0;
+	bool next;
+	char nextGame;
+	cout << "\n\tHere you can roll any number from 1 to 6!"
+		<< endl
+		<< "\nEnter (y) to play, (n) to exit!" 
+		<< endl;
+	cin >> nextGame;
+	if (nextGame == 'y') 
+	{
+		next = false;
+	}
+	else 
+	{
+		next = true;
+		cout << "\n\tOkay, see you next time!" << endl;
+	}
+	srand(static_cast<unsigned int>(time(0)));
+	int die = rand()%100 + 1;
+	while (!next)
+	{
+		sum += die;
+		++attempts;
+		cout << "\n\tYou've just rolled a " << die << "!" << endl;
+		cout << "\nDo you want to roll another number? (y/n)" << endl;
+		cin >> nextGame;
+		if (nextGame == 'y') 
+		{
+			next = false;
+		}
+		else
+		{
+			next = true;
+			cout << "\n\tOkay, see you next time!" << endl;
+			cout << "\n\tYou've rolled " << sum << " in total!";
+			cout << "\n\tYou've spent " << attempts << " attempts in total!" << endl;
+		}
+	}
+}
+
+
+// 2.2
+// Guess my Number
+#include<iostream>
+#include<ctime>
+#include<cstdlib>
+using namespace std;
+
+int main() {
+	int guess;
+	int guesses = 0;
+	cout << "\tWelcome to Guess My Number" << endl;
+	srand(static_cast<unsigned int>(time(0)));
+	int randomNumber = rand()%100 + 1;
+	do
+	{
+		++guesses;
+		cout << "\nEnter a guess: ";
+		cin >> guess;
+		if (guess > randomNumber)
+			cout << "Too high!" << endl;
+		else if (guess < randomNumber)
+			cout << "Too low!" << endl;
+		else {
+			cout << "\nThat's it! You got it in " << guesses << " guesses!" << endl;
+		}
+	} while (guess != randomNumber);
+}
+
+
+// 2.3
+// Selecting difficulty
+#include<iostream>
+#include<string>
+using namespace std;
+
+enum difficulty { NOVICE = 0, EASY = 1, NORMAL = 2, HARD = 3, UNBEATABLE = 4 };
+
+int main()
+{
+	int choice;
+	cout << "\n\tDifficulty Levels\n\n" << "0 - Notice\n1 - Easy\n2 - Normal\n3 - Hard\n4 - Unbeatable\n\n" << "Enter a choice: ";
+	cin >> choice;
+	switch (choice) 
+	{
+		case 0:
+		cout << "\n\tYou picked Novice\n"; break;
+		case 1:
+			cout << "\n\tYou picked Easy\n"; break;
+		case 2:
+			cout << "\n\tYou picked Normal\n"; break;
+		case 3:
+			cout << "\n\tYou picked Hard\n"; break;
+		case 4:
+			cout << "\n\tYou picked Unbeatable\n"; break;
+		default:
+			cout << "\n\tYou made an invalid choice.\n";
+	}
+}
+
+
+// 2.4
+// Guess my number 2.0
+#include<iostream>
+#include<cstdlib>
+#include<ctime>
+using namespace std;
+
+int main() {
+	int secretNumber,
+		aiGuess,
+		guesses = 0;
+	cout << "\tWelcome to GUESS MY NUMBER 2.0\n\n" 
+		<< "You need to enter a secret number and AI will try to guess it!\n" 
+		<< "Enter a number: ";
+	srand(static_cast<unsigned int>(time(0)));
+	cin >> secretNumber;
+	do
+	{
+		++guesses;
+		aiGuess = rand() % 100 + 1;
+		if (aiGuess > secretNumber)
+		{
+			cout << aiGuess << ": too high!\n";
+		}
+		else if (aiGuess < secretNumber)
+		{
+			cout << aiGuess << ": too low!\n";
+		}
+		else
+		{
+			cout << "\n" << aiGuess << ". Wow! Amazing, AI won with " << guesses << " steps!\n";
+		}
+	} while (aiGuess != secretNumber);
+}
