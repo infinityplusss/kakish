@@ -1,0 +1,324 @@
+
+// 3.0
+// Some basic info about (for)
+#include<iostream>
+using namespace std;
+
+int main() 
+{
+	cout << "Counting forward:\n";
+	for (int i = 0; i < 10; ++i)
+	{
+		cout << i << " ";
+	}
+	cout << "\n\nCounting Backward:\n";
+	for (int i = 9; i > -1; --i)
+	{
+		cout << i << " ";
+	}
+	cout << "\n\nCounting by fives:\n";
+	for (int i = 0; i < 51; i += 5)
+	{
+		cout << i << " ";
+	}
+	cout << "\n\nCounting with null statements:\n";
+	int count = 0;
+	for (;count < 10;) 
+	{
+		cout << count << " ";
+		++count;
+	}
+	cout << "\n\nCounting with nested for loops:\n";
+	
+	const int ROWS = 5;
+	const int COLUMNS = 3;
+
+	for (int i = 0; i < ROWS; ++i)
+	{
+		for (int j = 0; j < COLUMNS; ++j)
+		{
+			cout << i << "," << j << "\t";
+		}
+		cout << endl;
+	}
+}
+
+
+
+// 3.1
+// String info
+#include<iostream>
+#include<string>
+using namespace std;
+
+int main() 
+{
+	string word1 = "Game", word2("Over"), word3(3, '!'), phrase = word1 + " " + word2 + word3;
+	cout << "The phrase is: " << phrase << "\n\n";
+	cout << "The phrase has " << phrase.size() << " characters in it.\n\n"; 
+	// можно и phrase.length() - то же самое.
+	cout << "The character at position 0 is: " << phrase[0] << "\n\n";
+	phrase[0] = 'L';
+	cout << "Changing the character at position 0.\nThe phrase is now: " << phrase << "\n\n";
+	for (unsigned int i = 0; i < phrase.size(); ++i)
+	{
+		cout << "Character at position " << i << " is: " << phrase[i] << endl;
+	}
+	cout << "\n\nThe sequence 'Over' begins at location " << phrase.find("Over") << endl; 
+	// можно начать с n-ого элемента, например: phrase.find("Over", 5) - начнет искать с пятого индекса.
+	if (phrase.find("eggplant") == string::npos)
+	// string::npos - номер позиции, которой быть не может (одну строку не удается найти в другой).
+	{
+		cout << "'eggplant' is not in the phrase.\n\n";
+	}
+	phrase.erase(4, 5); cout << "The phrase is now: " << phrase << endl;
+	phrase.erase(4); cout << "The phrase is now: " << phrase << endl;
+	// erase(4) - от 4 индекса и до конца строки.
+	phrase.erase(); cout << "The phrase is now: " << phrase << endl;
+	// erase() стирает все символы.
+	if (phrase.empty())
+	{
+		cout << "\nThe phrase is no more.\n";
+	}
+}
+
+
+
+// 3.2 + my thouhts ^^
+// Trading Game
+#include<iostream>
+#include<string>
+using namespace std;
+
+int main() {
+	cout << "\n\tWelcome to the Trading Game!\n\n";
+	string userAnswer, userAnswer_1;
+	const int MAX_ITEMS = 10;
+	string inventory[MAX_ITEMS];
+	int numberOfItems = 0, userAnswer_2, userAnswer_3;
+
+	inventory[numberOfItems] = "Sword";
+	inventory[++numberOfItems] = "Armor";
+	inventory[++numberOfItems] = "Shield";
+
+	while (true) // Главный цикл, который продолжается до тех пор, пока не введено "quit"
+	{  
+		cout << "\tDo you want to see your inventory? (y/n)\n--";
+		cin >> userAnswer;
+
+		if (userAnswer == "quit") 
+		{
+			break;  // Если пользователь вводит "quit", выходим из цикла
+		}
+
+		if (userAnswer == "y") 
+		{
+			cout << "\nYour items:\n";
+			for (int i = 0; i <= numberOfItems; ++i) 
+			{
+				cout << inventory[i] << endl;
+			}
+		}
+		else 
+		{
+			cout << "Your items won't be displayed.\n";
+		}
+
+		while (true) // Торговый цикл
+		{
+			cout << "\n\tDo you want to trade? (y/n)\n--";
+			cin >> userAnswer_1;
+
+			if (userAnswer_1 == "quit") 
+			{
+				break;  
+				// Если пользователь вводит "quit", выходим из торгового цикла
+			}
+
+			if (userAnswer_1 == "y") 
+			{
+				cout << "\nWhat do you want to trade?\n";
+				for (int i = 0; i <= numberOfItems; ++i) 
+				{
+					cout << i << " - " << inventory[i] << endl;
+				}
+				cout << "9 - Quit Shop\n--";
+				cin >> userAnswer_3;
+
+				if (userAnswer_1 == "9") 
+				{
+					break;  
+					// Прерываем цикл торговли, если пользователь выбрал "9"
+				}
+
+				cout << "\nWhat do you want to trade on?\n0 - Battle axe\n9 - Quit shop\n--";
+				cin >> userAnswer_2;
+
+				if (userAnswer_2 == 9) 
+				{
+					break;  
+					// Прерываем цикл торговли, если пользователь выбрал "9"
+				}
+				else 
+				{
+					string previousItem = inventory[userAnswer_3];
+					inventory[userAnswer_3] = "Battle axe";
+					cout << "\nYou successfully traded " << previousItem << " for a Battle axe!\n\n";
+					break;  
+					// Прерываем цикл торговли после успешной сделки
+				}
+			}
+			else if (userAnswer_1 == "n") 
+			{
+				cout << "\nOkay, bye\n";
+				break;  
+				// Выход из торгового цикла, если пользователь не хочет торговать
+			}
+		}
+	}
+	cout << "\nExiting the game.\n";
+}
+
+
+
+// 3.3
+// Hero's invenoty (3.2 but easier)
+#include<iostream>
+#include<string>
+using namespace std;
+int main() 
+{
+	const int MAX_ITEMS = 10; string inventory[MAX_ITEMS]; int numItems = 0;
+	inventory[numItems] = "Sword"; inventory[++numItems] = "Armor"; inventory[++numItems] = "Shield";
+	cout << "Your items:\n";
+	for (int i = 0; i <= numItems; ++i)
+	{
+		cout << inventory[i] << endl;
+	}
+	cout << "\nYou traded your sword for a battle axe.\n\n";
+	inventory[0] = "Battle axe";
+	cout << "Your items:\n";
+	for (int i = 0; i <= numItems; ++i)
+	{
+		cout << inventory[i] << endl;
+	}
+	cout << "\nThe item named " << inventory[0] << " has " << inventory[0].size() << " letters in it.\n";
+	cout << "\nYou found a Healing potion.\n\n";
+	if (numItems < MAX_ITEMS)
+	{
+		inventory[++numItems] = "Healing potion";
+	}
+	else
+	{
+		cout << "There is no space in your inventory" << endl;
+	}
+	cout << "Your items:\n";
+	for (int i = 0; i <= numItems; ++i)
+	{
+		cout << inventory[i] << endl;
+	}
+}
+
+
+
+// 3.4
+// Kresteki noleki)
+#include<iostream>
+using namespace std;
+
+int main() 
+{
+	const int ROWS = 3, COLUMNS = 3;
+	char board[ROWS][COLUMNS] = { {'0','X','0'},
+		{' ','X','X'},
+		{'X','0','0'} };
+	cout << "Here's the tic-tac-toe board:\n";
+	for (int i = 0; i < ROWS; ++i)
+	{
+		for (int j = 0; j < COLUMNS; ++j) 
+		{
+			cout << board[i][j];
+		}
+		cout << endl;
+	}
+	board[1][0] = 'X';
+	cout << "\n'X' moves to the empty location.\n\nNow the tic-tac-toe board is:\n";
+	for (int i = 0; i < ROWS; ++i)
+	{
+		for (int j = 0; j < COLUMNS; ++j)
+		{
+			cout << board[i][j];
+		}
+		cout << endl;
+	}
+	cout << "\n'X' wins!\n";
+}
+
+
+// 3.5
+// Word Jumble, угадайка слов с перемешанными буквами, + подсказки, + очки
+#include<iostream>
+#include<string>
+#include<cstdlib>
+#include<ctime>
+using namespace std;
+int main() 
+{
+	// внутриигровой процесс.
+	unsigned int prise = 0; const unsigned int HINT_POINTS = 250; 
+	// Изначально за победу начисляется 0 очков, снимается 250.
+	enum fields {WORD, HINT, NUM_FIELDS}; // 0, 1, 2
+	// NUM_FIELDS - имеет числовое значение 2, показывает количество элементов в перечислении.
+	const int NUM_WORDS = 5;
+	const string WORDS[NUM_WORDS][NUM_FIELDS] =
+	{	{"wall", "Do you feel you're banging your head against something?"}, 
+		{"glasses", "These might help you see the answer."},
+		{"jumble", "It's what the game is all about."},
+		{"mouse", "It can be an animal and a computer thing."},
+		{"kaneki", "You can add ken to this."}
+	};
+	// загаданные слова и подсказки к ним, где 0 - слово, 1 - подсказка (индексы NUM_FIELDS).
+	srand(static_cast<unsigned int>(time(0)));
+	int randomChoise = (rand() % NUM_WORDS); // рандомное число от 0 до 4, тк остаток от NUM_WORDS(5) от 0 до 4.
+	string randomWord = WORDS[randomChoise][WORD]; // рандомное слово (WORDS[0 - 4][0]).
+	string randomHint = WORDS[randomChoise][HINT]; // подсказка к рандомному слову (WORDS[0 - 4][1]).
+	string jumble = randomWord;
+	for (int i = 0; i < jumble.size(); ++i)
+	{
+		int index1 = (rand() % jumble.size()); // случайная позиция 1.
+		int index2 = (rand() % jumble.size()); // случайная позиция 2.
+		char temp = jumble[index1]; 
+		jumble[index1] = jumble[index2];
+		jumble[index2] = temp; // замена символов, стоявших на позициях index1 и index2, местами.
+	}
+
+	prise = jumble.size() * 100; 
+	// - начисляем 100 очков за каждую букву в загаданном слове.
+
+	// внешний процесс, который видит игрок.
+	cout << "\t\t\tWelcome to the Word Jumble!\n\nYou need to guess the strange word, unscramling the letters!"
+		<< "\nEnter 'hint' for a hint.\nEnter 'quit' to quit the game.\n\n"
+		<< "The jumble is: " << jumble << endl;
+	string userAnswer;
+	cout << "Your guess: "; cin >> userAnswer;
+	while ((userAnswer != "quit") && (userAnswer != randomWord))
+	{
+		if (userAnswer == "hint")
+		{
+			cout << randomHint << endl;
+			prise -= HINT_POINTS; 
+			// снимаем 250 очков за подсказку.
+		}
+		else
+		{
+			cout << "Oops! It's not a " << userAnswer << "! Try again!" << endl;
+		}
+		cout << "Your guess: "; cin >> userAnswer;
+	}
+	if (userAnswer == randomWord)
+	{
+		cout << "\nThat's it! You won " << prise << " points!\n"; 
+		// если пользователь выиграл, выводит количество очков.
+	}
+	cout << "\nThanks for playing this game, bye!\n";
+}
