@@ -1,0 +1,292 @@
+
+// 4.0
+// hero's inventory 2.0, vectors
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
+int main() 
+{
+	vector<string> inventory;
+	inventory.push_back("Sword"); inventory.push_back("Armor"); inventory.push_back("Shield");
+	// также в скобках после имени можно указать размер вектора и через запятую его содержимое
+	// например, inventory(10,"nothing") состоит из десяти nothing.
+
+	cout << "You have " << inventory.size() << " items.\n\nYour items:" << endl;
+	for (unsigned int i = 0; i < inventory.size(); ++i)
+	{
+		cout << inventory[i] << endl;
+	}
+	
+	cout << "\nYou traded your sword for a Battle axe!\n\nYour items:\n";
+	inventory[0] = "Battle axe";
+	for (unsigned int i = 0; i < inventory.size(); ++i)
+	{
+		cout << inventory[i] << endl;
+	}
+	cout << "\nThe item named '" << inventory[0] << "' has " << inventory[0].size() << " letters in it.\n" 
+		<< "\nYour sheld is destroyed in a fierce battle.\n\n";
+	inventory.pop_back();
+	cout << "Your items: " << endl;
+	for (unsigned int i = 0; i < inventory.size(); ++i)
+	{
+		cout << inventory[i] << endl;
+	}
+	cout << "\nYou were robbed of all of your possessions by a thief" << endl;
+	inventory.clear();
+	if (inventory.empty()) 
+	{
+		cout << "You have nothing." << endl;
+	}
+	else
+	{
+		cout << "You have at least one item." << endl;
+	}
+}
+
+
+// 4.1
+// iterator shit hard!!!
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
+int main() 
+{
+	vector<string> inventory;
+	inventory.push_back("Sword"); inventory.push_back("Armor"); inventory.push_back("Shield");
+	vector<string>::iterator myIterator; vector<string>::const_iterator iter; 
+	// объявление обычного и константного итераторов (конст итер никогда не изменяет значения элементов).
+	cout << "Your items:\n";
+	for (iter = inventory.begin(); iter != inventory.end(); ++iter)
+	// begin() возвращает итератор, указывающий на первый элемент inventory.
+	// end() возвращает итератор, следующий за последним элементом в inventory.
+	{
+		cout << *iter << endl; // возвращение элемента, на который ссылается итератор.
+	}
+	cout << "\nYou've traded your sword for a battle axe\n";
+	myIterator = inventory.begin();
+	*myIterator = "Battle axe";
+	// заменяем значение первого элемента, на которое ссылается итератор, на battle axe.
+	cout << "\nYour items:\n";
+	for (iter = inventory.begin(); iter != inventory.end(); ++iter)
+	{
+		cout << *iter << endl;
+	}
+	cout << "\nThe item named " << *myIterator << " has " << (*myIterator).size() << " letters in it.\n";
+	// при применении функций-членов всегда ставим круглые скобки. можно также записать как myIterator -> size()
+	cout << "\nYou recover a crossbow for a slain enemy.\n";
+	inventory.insert(inventory.begin(), "Crossbow");
+	// вставляем crossbow в начало inventory, сдвигая все элементы на 1.
+	cout << "\nYour items:\n";
+	for (iter = inventory.begin(); iter != inventory.end(); ++iter)
+	{
+		cout << *iter << endl;
+	}
+	cout << "\nYour armor is destroyed in a fierce battle.\n";
+	inventory.erase(inventory.begin() + 2);
+	cout << "\nYour items:\n";
+	for (iter = inventory.begin(); iter != inventory.end(); ++iter)
+	{
+		cout << *iter << endl;
+	}
+}
+
+
+// 4.2
+// algotithm metods!
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<ctime>
+using namespace std;
+int main()
+{
+	vector<int>::const_iterator iter;
+	// задаем константный итератор.
+	cout << "Creating a list of scores.";
+	vector<int> scores;
+	scores.push_back(1500);
+	scores.push_back(3500);
+	scores.push_back(7500);
+	scores.push_back(5555); scores.erase(scores.end() - 1); 
+	// удаление последного элемента.
+	// можно написать как scores.pop_back()
+	cout << "\nHigh Scores:\n";
+	for (iter = scores.begin(); iter != scores.end(); ++iter)
+	{
+		cout << *iter << endl;
+	}
+	cout << "\nFinding a score.\nEnter a score to find: ";
+	int score; cin >> score;
+	iter = find(scores.begin(), scores.end(), score);
+	if (iter != scores.end())
+	{
+		cout << "Score is found.\n";
+	}
+	else
+	{
+		cout << "Score is not found.\n";
+	}
+	cout << "\nRandomizing scores.\n";
+	srand(static_cast<unsigned int>(time(0)));
+	random_shuffle(scores.begin(), scores.end());
+	cout << "High Scores:\n";
+	for (iter = scores.begin(); iter != scores.end(); ++iter)
+	{
+		cout << *iter << endl;
+	}
+	cout << "\nSorting scores.\n";
+	sort(scores.begin(), scores.end());
+	cout << "High Scores:\n";
+	for (iter = scores.begin(); iter != scores.end(); ++iter)
+	{
+		cout << *iter << endl;
+	}
+	cout << "\nAdding 2 new scores with memory reserving.\n";
+	scores.reserve(5);
+	scores.push_back(7777); scores.push_back(1111);
+	// резервируем память для добавления новых элементов
+	cout << "\nScores vector size is: " << size(scores);
+	cout << "\nScores vector capacity is: " << scores.capacity() << endl;
+	// выводит длину и емкость (5 и 5).
+}
+
+
+// 4.3
+// viselica! (hangman)
+#include<iostream>
+#include<ctime>
+#include<vector>
+#include<string>
+#include<algorithm>
+#include<cctype>
+using namespace std;
+int main()
+{
+	const int MAX_WRONG = 8; int wrong = 0;
+	// максимальное количество ошибок и текущие ошибки пользователя.
+	vector<string> words;
+	// контейнер для слов, которые будет отгадывать пользователь.
+	words.push_back("GUESS"); words.push_back("PRADA"); words.push_back("ZHOPA"); words.push_back("KAKISH");
+	srand(static_cast<unsigned int>(time(0)));
+	random_shuffle(words.begin(), words.end());
+	const string THE_WORD = words[0];
+	// рандомное из трех слов слово для отгадывания.
+	string currentWord(THE_WORD.size(), '-');
+	// часть слова открытая на данный момент.
+	string usedLetters;
+
+	// внешная игра.
+	cout << "\tWelcome to the Hangman!\n\tYou need to guess the word, or...\n\tGood luck!\n\n";
+	while ((wrong < MAX_WRONG) && (currentWord != THE_WORD))
+	// пока пользователь не написал верное слово и пока его попытки не кончились.
+	{
+		cout << "You have " << (MAX_WRONG - wrong) << " incorrect guesses left.\n";
+		cout << "You have used these letters: " << usedLetters << "\nThe word is: " << currentWord << endl;
+		cout << "\n\nEnter your guess: ";
+		char userGuess; cin >> userGuess;
+		userGuess = toupper(userGuess);
+		// переводим строку в верхний регистр.
+		while (usedLetters.find(userGuess) != string::npos)
+		// пока угаданная буква в списке угаданных пишем пользователю о том, что она уже есть.
+		{
+			cout << "You have already guessed these letter.\n";
+			cout << "\nEnter your guess: ";
+			cin >> userGuess;
+			userGuess = toupper(userGuess);
+		}
+		usedLetters += userGuess;
+		// добавлем ее в "список" использованных букв.
+		if (THE_WORD.find(userGuess) != string::npos)
+		// если буква пользователя находится в заданном слове.
+		{
+			cout << "Great. " << userGuess << " is in the word.\n";
+			for (int i = 0; i < THE_WORD.size(); ++i)
+			{
+				if (THE_WORD[i] == userGuess)
+				// если пользователь ввел букву, которая есть в загаданном слове.
+				{
+					currentWord[i] = userGuess;
+					// задаем нашему слову в виде ----- букву с соответствующим индексом (индексами).
+				}
+			}
+		}
+		else
+		// если не находится.
+		{
+			cout << "The " << userGuess << " is not in the word.\n";
+			++wrong;
+			// уменьшаем оставшиеся попытки на один.
+		}
+	}
+	if (wrong == MAX_WRONG)
+	{
+		cout << "\nYOU'RE DEAD.\n";
+	}
+	else
+	{
+		cout << "\nNice, you have run away.\n";
+	}
+	cout << "The word was: " << THE_WORD << endl;
+}
+
+// 4.4
+// list of favorite games!
+#include<iostream>
+#include<vector>
+#include<string>
+#include<algorithm>
+using namespace std;
+int main()
+{
+	int countOfGames = 0;
+	const int MAX_GAMES = 20;
+	vector<string> games; string userGame;
+	vector<string>::iterator iter; vector<string>::iterator myIterator;
+	games.reserve(20);
+	cout << "\n\tList of your favorite games!\nHere you can add, delete and see your games!\n"
+		<< "(enter add, delete or see for the next action, quit for quit)\n\n";
+	while (userGame != "quit")
+	{
+		cin >> userGame;
+		if (userGame == "add")
+		{
+			cout << "\nYou can add up to 20 games for your list!\nEnter your favorite games!\n(enter stop for stop)\n\n";
+			while ((userGame != "stop") && (countOfGames < MAX_GAMES))
+			{
+				getline(cin >> ws, userGame);
+				// добавляем элементы с игнорированием пробелов.
+				games.push_back(userGame);
+			}
+			games.pop_back(); 
+			// удаляем стоп, который мы ввели чтобы остановить цикл
+			cout << "\nYou have " << games.size() << " games in your list!\n\n";
+		}
+		else if (userGame == "see")
+		{
+			cout << "\nYour games:\n | ";
+			for (iter = games.begin(); iter != games.end(); ++iter)
+			{
+				cout << *iter << " | ";
+			}
+			cout << "\n\n";
+		}
+		else if (userGame == "delete")
+		{
+			cout << "Enter a game, that you want to delete.\n\n";
+			string gameToDelete; getline(cin >> ws, gameToDelete);
+			// создаем новую переменную для удаления.
+			myIterator = find(games.begin(), games.end(), gameToDelete);
+			if (myIterator == games.end())
+			{
+				cout << "There's not that game in the list.";
+			}
+			else
+			{
+				games.erase(myIterator);
+				cout << "\nGame has been successfully deleted.\n\n";
+			}
+		}
+	}
+}
