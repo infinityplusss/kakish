@@ -1,0 +1,220 @@
+
+// 5.0
+// y/n, functions.
+#include<iostream>
+#include<string>
+using namespace std;
+// задаем функцию без переменной.
+char firstAsk()
+{
+	char response;
+	do
+	{
+		cout << "Please enter 'y' or 'n': ";
+		cin >> response;
+	} while (response != 'y' && response != 'n');
+	return response;
+}
+// задаем функцию с переменной.
+char secondAsk(string answer)
+{
+	char response;
+	do
+	{
+		cout << answer << " <y/n>: ";
+		cin >> response;
+	} while (response != 'y' && response != 'n');
+	return response;
+}
+int main()
+{
+	// вызываем функцию firstAsk и secondAsk и записываем их в переменные чтобы затем их вывести.
+	char fa = firstAsk();
+	cout << "You have entered: " << fa << endl;
+	char sa = secondAsk("Do you wish to save your game?");
+	cout << "You have entered: " << sa << endl;
+}
+
+
+// 5.1
+// local vars.
+#include<iostream>
+using namespace std;
+int number = 5;
+// создание глобальной переменной number.
+
+void hide() 
+// функция скрывает глобальную переменную number = 5 локальной number = -5.
+{
+	int number = -5;
+	cout << "In func() number is: " << number << "\n\n";
+}
+void change()
+{
+	number = 2;
+	cout << "In change() number is: " << number << "\n\n";
+}
+
+int main()
+{
+	cout << "In main() number is: " << number << "\n\n";
+	hide();
+	cout << "Again in main() number is: " << number << "\n\n";
+	{
+		// создание вложенной области видимости.
+		int number = 10;
+		cout << "In new scope number is: " << number << "\n\n";
+	}
+	cout << "Back to main() number is: " << number << "\n\n";
+	change();
+	cout << "Finally in main() number is: " << number << "\n\n";
+}
+
+
+// 5.2
+// диапазоны числа + параметры функций.
+#include<iostream>
+using namespace std;
+
+int askNumber(int high, int low=1)
+// задаем функцию диапазона числа, где по умолчанию начало = 1.
+{
+	int number;
+	do
+	{
+		cout << "Please enter a number (" << low << " - " << high << "): ";
+		cin >> number;
+	} while (number > high || number < low);
+	return number;
+	// повторяем цикл до тех пор, пока пользователь не введет число, соответствующее заданному диапазону.
+}
+
+int main()
+{
+	int number = askNumber(5);
+	// задаем диапазон от 1 до 5.
+	cout << "Thanks for entering: " << number << endl;
+	number = askNumber(10, 5);
+	// задаем диапазон от 5 до 10.
+	cout << "Thanks for entering: " << number << endl;
+}
+
+
+// 5.3
+// перегрузка функций.
+#include<iostream>
+#include<string>
+using namespace std;
+int triple(int number)
+{
+	return number * 3;
+}
+string triple(string text)
+{
+	return (text + text + text);
+}
+int main()
+{
+	cout << "Tripling 5: " << triple(5) << "\n\n";
+	cout << "Tripling 'Text': " << triple("Text") << "\n";
+}
+
+
+// 5.4
+// Mad Lib, functions.
+#include<iostream>
+#include<string>
+using namespace std;
+
+string askInfo(string prompt)
+{
+	string text;
+	cout << prompt;
+	cin >> text;
+	return text;
+}
+int askInfo(string prompt, bool dummy)
+// добавляем dummy параметр чтобы перегрузить функцию.
+{
+	int num;
+	cout << prompt;
+	cin >> num;
+	return num;
+}
+void tellStory(string name, string pluralNoun, int number, string bodyPart, string verb)
+{
+	cout << "Here is your story:\n\nThe famous explorer ";
+	cout << name;
+	cout << " had hearly given up a life-lond quest to find\nThe lost City of ";
+	cout << pluralNoun;
+	cout << " when one day, the ";
+	cout << pluralNoun;
+	cout << " found the explorer.\nSurrounded by ";
+	cout << number << " " << pluralNoun;
+	cout << ", a tear came to ";
+	cout << name << "'s ";
+	cout << bodyPart << ".\n";
+	cout << "After all this time, the quest was finally over. " <<
+	"And then the ";
+	cout << pluralNoun << "\n";
+	cout << "promptly devoured ";
+	cout << name << ".\n";
+	cout << "The moral of the story? Be careful what you ";
+	cout << verb;
+	cout << " for.\n";
+}
+int main()
+{
+	cout << "Welcome to Mad Lib.\n\nAsnwer the following questions to help create a new story.\n\n";
+	string name = askInfo("Please enter a name: ");
+	string pluralNoun = askInfo("Please enter a plural noun: ");
+	int number = askInfo("Please enter a number: ", true);
+	string bodyPart = askInfo("Please enter a body part: ");
+	string verb = askInfo("Please enter a verb: ");
+	tellStory(name, pluralNoun, number, bodyPart, verb);
+}
+
+
+// 5.5
+// какая-то шляпа странная но работает.
+#include<string>	
+#include<iostream>
+#include <cmath>
+// для степени.
+using namespace std;
+
+int userNumber(string text)
+{
+	string::iterator iter;
+	cout << text;
+	string userAnswer;
+	cin >> userAnswer;
+	// дальше мы представляем число в виде произведение с десятками: a*10**b + c*10**d + ...
+	// ищем c помощью sizeOfText длину нашей строки, для степеней десятки сразу вычитаем единицу.
+	// затем с помощью итератора проходимся по всей строке, переводя тип char в int.
+	// представляем наше число в виде произведение с десятками.
+	// после этого прибавляем наше представленное число к totalNumber.
+	int sizeOfText = 0;
+	for (iter = userAnswer.begin(); iter != userAnswer.end(); ++iter)
+	{
+		++sizeOfText;
+	}
+	int tenPower = --sizeOfText;
+	int totalNumber = 0;
+	for (iter = userAnswer.begin(); iter != userAnswer.end(); ++iter)
+	{
+		char digitChar = *iter;
+		int digit = digitChar - '0';
+		digit *= pow(10, tenPower);
+		totalNumber += digit;
+		--tenPower;
+	}
+	return totalNumber;
+}
+
+int main()
+{
+	int number = userNumber("Enter some random number: ");
+	cout << pow(number, 2);
+}
+
